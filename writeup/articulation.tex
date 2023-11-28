@@ -1,0 +1,410 @@
+\documentclass[titlepage, hidelinks, 12pt]{article}
+
+\usepackage{booktabs}
+\usepackage{longtable}
+
+%for custom page numbering:
+\usepackage{fancyhdr}
+
+\usepackage{lipsum}
+\usepackage{hyperref}
+\usepackage{palatino}
+\usepackage{tikz}
+\usepackage{chngcntr}
+\counterwithin{figure}{section}
+%\usepackage{breqn} % useful for breaking equations across multiple lines automatically. Breaks everything.
+
+
+\usepackage{setspace}
+%\usepackage{indentfirst} %tex default is no indent on first paragraph after heading
+\usepackage{url}
+\usepackage{amsmath, amssymb, amsfonts, amsthm}
+\usepackage{float}
+\usepackage{subfig}
+\usepackage{graphicx}
+\usepackage{environ, enumerate}
+%\usepackage{mathbbol}
+%\DeclareSymbolFontAlphabet{\amsmathbb}{AMSb}
+\graphicspath{ {images/} }
+\providecommand{\keywords}[1]{\textbf{\textit{Keywords---}} #1} 
+\usepackage[format=plain,
+            labelfont={bf, it},
+            textfont=it]{caption}
+
+\usepackage[utf8]{inputenc}
+
+% Default fixed font does not support bold face
+\DeclareFixedFont{\ttb}{T1}{txtt}{bx}{n}{12} % for bold
+\DeclareFixedFont{\ttm}{T1}{txtt}{m}{n}{12}  % for normal
+
+% Custom colors
+\usepackage{color}
+\definecolor{deepblue}{rgb}{0,0,0.5}
+\definecolor{deepred}{rgb}{0.6,0,0}
+\definecolor{deepgreen}{rgb}{0,0.5,0}
+
+\usepackage{listings}
+
+% Python style for highlighting
+\newcommand\pythonstyle{\lstset{
+language=Python,
+basicstyle=\ttm,
+morekeywords={self},              % Add keywords here
+keywordstyle=\ttb\color{deepblue},
+emph={MyClass,__init__},          % Custom highlighting
+emphstyle=\ttb\color{deepred},    % Custom highlighting style
+stringstyle=\color{deepgreen},
+frame=tb,                         % Any extra options here
+showstringspaces=false
+}}
+
+\usepackage{etoolbox}
+\AtBeginEnvironment{quote}{\par\singlespacing\small}
+
+% Python environment
+\lstnewenvironment{python}[1][]
+{
+\pythonstyle
+\lstset{#1}
+}
+{}
+
+% Python for external files
+\newcommand\pythonexternal[2][]{{
+\pythonstyle
+\lstinputlisting[#1]{#2}}}
+
+% Python for inline
+\newcommand\pythoninline[1]{{\pythonstyle\lstinline!#1!}}
+
+\usepackage{lineno}
+
+\usepackage{epigraph}
+
+% \epigraphsize{\small}% Default
+\setlength\epigraphwidth{8cm}
+\setlength\epigraphrule{0pt}
+
+\usepackage{etoolbox}
+
+\makeatletter
+\patchcmd{\epigraph}{\@epitext{#1}}{\itshape\@epitext{#1}}{}{}
+\makeatother
+
+% Align and Lineno do not play well together. This should fix it:
+
+\newcommand*\linenomathpatch[1]{%
+  \cspreto{#1}{\linenomath}%
+  \cspreto{#1*}{\linenomath}%
+  \csappto{end#1}{\endlinenomath}%
+  \csappto{end#1*}{\endlinenomath}%
+}
+
+\linenomathpatch{equation}
+\linenomathpatch{gather}
+\linenomathpatch{multline}
+\linenomathpatch{align}
+\linenomathpatch{alignat}
+\linenomathpatch{flalign}
+
+
+
+%%%%%%%%%
+% indentation
+%%%%%%%%%
+
+\setlength\parindent{24pt}
+
+\setlength{\voffset}{-1cm}
+\setlength{\textwidth}{17cm}
+\addtolength{\textheight}{2cm}
+\setlength{\footskip}{1cm}
+\addtolength{\oddsidemargin}{-2cm}
+\addtolength{\evensidemargin}{-2cm}
+
+\widowpenalty10000
+\clubpenalty10000
+
+%%%%%%%%%
+% page numbering and logo
+%%%%%%%%%
+
+\pagestyle{fancy}
+
+\fancyhead[L, C]{}
+%\fancyhead[R]{\includegraphics[scale=.35]{sb_logo_black.png}}
+\fancyfoot[L]{}
+\fancyfoot[C]{\thepage}
+\fancyfoot[R]{}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0pt}
+
+
+%Def, Lemma, Theorem, Corollary environment
+\theoremstyle{plain}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{conjecture}[theorem]{Conjecture}
+\newtheorem{question}[theorem]{Question}
+%\newtheorem*{proof}{Proof}
+\theoremstyle{remark}
+\newtheorem*{remark}{Remark}
+\newtheorem*{example}{Example}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+
+%New commands
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\T}{\mathcal{T}}
+\newcommand{\E}{\mathbb{E}}
+\newcommand{\betahat}{\hat{\beta}}
+
+\newcommand{\varSS}{\frac{\partial \lambda}{ \partial b_{a}}}
+\newcommand{\varLL}{\frac{\partial \lambda}{ \partial b_{a+1}}}
+\newcommand{\LH}{\mathcal{LH}}
+
+
+
+
+%New math operators
+\DeclareMathOperator{\ringchar}{char}
+\DeclareMathOperator{\diag}{diag}
+\DeclareMathOperator*{\argmax}{argmax} \DeclareMathOperator{\disc}{disc}
+\DeclareMathOperator{\MRS}{MRS}
+\DeclareMathOperator{\smallersooner}{SS}
+\DeclareMathOperator{\largerlater}{LL}
+\DeclareMathOperator{\ES}{ES}
+%\DeclareMathOperator{\exp}{exp}
+\DeclareMathOperator{\hyp}{hyp}
+\renewcommand\d[1]{\:\textrm{d}#1}
+\newcommand*\diff{\mathop{\!\mathrm{d}}}
+
+\doublespacing
+\begin{document}
+\begin{singlespace}
+\begin{titlepage}
+   \begin{center}
+       \vspace*{1cm}
+\Huge
+       \textbf{LLM Articulation of In-Context Learning} \\
+\Large
+       \vspace{0.5cm}
+      
+            
+       \vspace{4.1cm}
+%       \includegraphics[scale = 1.4]{sb_logo_black.png} \\
+       \vspace*{\fill}
+       \textbf{Eric Rozon - Astra Fellowship Application  } 
+
+            
+            
+   \end{center}
+\end{titlepage}
+
+
+%%HERE IS A TEST CHANGE FOR BRANCH PURPOSES
+
+
+\begin{abstract}
+    In this article we explore a LLM's capability to learn a simple language rule from a small number
+    of examples, and then articulate what it has learned. We find that it is challenging for a LLM to
+    learn a rule reliablly, and even more challenging for the system to articulate what it has learned. 
+    \\ \\
+    Briefly: I was unsuccessful in teaching an LLM a rule with few-shot learning. However, the result
+    that a sophisticated LLM was unable to learn a simple rule consistently is intrinsically interesting to me. 
+
+
+\end{abstract}
+
+%\newpage
+
+%\tableofcontents
+
+\newpage
+
+%\section*{Acknowledgements}
+%\addcontentsline{toc}{section}{Acknowledgement}
+%\newpage
+%\input{texfiles/outline}
+%\newpage
+\end{singlespace}
+
+\linenumbers
+\section{Introduction}\label{sec:introduction}
+Our objective is to evaluate a LLM's capacity to
+\begin{enumerate}
+    \item learn a pattern from a small number of examples; and
+    \item articulate that rule clearly.
+\end{enumerate}
+All code for this project can be found at \url{https://github.com/erozon/astra_llm_articulation}. 
+
+\section{In-context learning}
+An LLM is given a small number of examples from which it is meant to learn a secret rule. Throughout, we use the OpenAI's
+\pythoninline{gpt-3.5-turbo-instruct} as our LLM. 
+We begin by investigating the extent to which an LLM can learn in context. 
+\subsection{Corpus, rules, and prompt}
+The Universal Declaration of Human Rights (UNDR) is written in the Latin alphabet in almost 200 languages. Our corpus in this
+study is sentences from the UNDR. 
+We consider the family of secret rules
+\begin{quote}
+    \textit{The sentence is written in the language} [insert-language]
+\end{quote}
+so that we have lots of secret rules that are easily tested. 
+If English is the language for the rule, an example prompt to the LLM is: 
+\begin{quote}
+Each of the following sentences is labeled 'Yes' if it follows a secret rule and labeled 'No' otherwise: 
+\begin{itemize}
+    \item "Article 7 All are equal before the law and are ent": Yes;
+    \item "No one may be compelled to belong to an associatio": Yes;
+    \item "All are entitled to equal protection against any d": Yes;
+    \item "Artikel 19 Jeder hat das Recht auf Meinungsfreihei": No;
+    \item "Jee müsüya naa wayuukana eeshi süpüla antaa süma o": No;
+    \item "Kom pu ce pepi nvwkvleay cem az mogen (" nacionali": No.
+\end{itemize}
+Your job is to learn the secret rule, thinking carefully about the previous examples. Does the sentence: 
+\begin{itemize}
+    \item ``Whereas it is essential, if man is not to be compe''
+\end{itemize}
+follow the rule? Give a 'Yes' or 'No' answer, with no explanation.
+\end{quote}
+Sentences are cut off after 50 characters. 
+
+\subsection{Why one request at a time? And why only a 'Yes' or 'No'?}
+
+We repeatedly send the above prompt with different test sentences to evaluate the accuracy of the LLM's learning. Initially
+I tried sending batches of up to 50 test sentences at a time (telling the LLM to respond with an ordered list
+of evaluation) but the LLM would often get confused and respond with a list of length different from 50, not inspiring confident in
+its ability to handle more than one evaluation at a time. I additionally experimented with asking the LLM to explain its reasoning,
+as this showed some signs of improving the likelihood of learning the rule, but the LLM is not great at handling more than one request
+at a time (ie explain the rule and then evaluate on the test sentence). 
+
+\subsection{Evaluation of in-context learning}
+
+We test the ability of the LLM to learn the rule based on three examples and three non-examples, as in the example above. The procedure for
+testing is:
+\begin{itemize}
+    \item select a language;
+    \item generate the labeled sentences for in-context learning;
+    \item generate the testing sentences, distinct from the learning data;
+    \item iterate through the testing sentences, building a prompt for the LLM from each sentence, and keeping track of successes/failures.
+\end{itemize}
+We test on 20 examples which satisfy the rule, and 20 examples which do not satisfy the rule. Our results are summarized in Table \ref{tab:accuracy}. 
+
+\begin{longtable}{lr}
+\toprule
+ & Accuracy \\
+\midrule
+Norwegian & 0.800000 \\
+NigerianPidginEnglish & 0.775000 \\
+Vlach & 0.750000 \\
+Campa\_Pajonalino & 0.725000 \\
+Cakchiquel & 0.675000 \\
+Tojol-abal & 0.650000 \\
+Quechua & 0.625000 \\
+Tzotzil & 0.625000 \\
+Hmong\_Miao-Sichuan-Guizhou-Yunnan & 0.625000 \\
+IrishGaelic\_Gaeilge & 0.625000 \\
+Arabela & 0.600000 \\
+Tenek\_Huasteco & 0.600000 \\
+HaitianCreole\_Kreyol & 0.600000 \\
+German\_Deutsch & 0.600000 \\
+Iloko\_Ilocano & 0.575000 \\
+Waray & 0.575000 \\
+Norwegian\_Norsk-Nynorsk & 0.575000 \\
+Zulu & 0.575000 \\
+Mayan\_Yucateco & 0.575000 \\
+Runyankore-rukiga\_Nkore-kiga & 0.575000 \\
+Samoan & 0.575000 \\
+Oshiwambo\_Ndonga & 0.550000 \\
+Basque\_Euskara & 0.550000 \\
+Ngangela\_Nyemba & 0.550000 \\
+Urarina & 0.550000 \\
+Tongan\_Tonga & 0.550000 \\
+Rarotongan\_MaoriCookIslands & 0.550000 \\
+Chickasaw & 0.525000 \\
+Cashibo-Cacataibo & 0.525000 \\
+Malagasy & 0.525000 \\
+\bottomrule
+\caption{The accuracy of the LLM in classifying sentences according to the secret rule corresponding to each language in the table.}
+\label{tab:accuracy}
+\end{longtable}
+
+Our results fall well-short of what I might have expected. In fact, as explained in later sections, the choice to use 
+the UDHR data and the language condition is out of necessity. Seemingly simple conditions like ``The sentence ends in an adverb'' or
+``The sentence includes the word 'two' somewhere'' were not well-learned by our chosen prompt format. I hypothesize that by changing
+the prompt, we could get better results, but lots of experimentation (ie telling the LLM to think simply, that a child might find the
+rule, or to think it through and explain its reasoning) yielded no significant improvement. The LLM's accuracy in learning the language
+rule is the best I could get. 
+
+
+\subsection{A failed attempt; Jane Austen}
+As a first attempted, we tried in-context-learning on sentences between 10 and 20 words long from 
+books Emma, Persuasion, and Sense and Sebsibility by Jane Austen. Classification went terribly; often randomly guessing would be more accurate
+than what the LLM learns in context. 
+
+We consider only sentences 10 to 20 words long\footnote{Restricting sentence length helps my OpenAI budget.}. 
+The method \pythoninline{nltk.pos_tag} tags each word as its part-of-speech. For instance: if \pythoninline{s = 'My name is Eric'}, then \\
+\pythoninline{nltk.pos_tag(nltk.tokenize.word_tokenize(s))} returns \pythoninline{[('My', 'PRP\$'), ('name', 'NN'), ('is', 'VBZ'), ('Eric', 'JJ')]}. 
+The part-of-speech tag depends on the context of the word in a sentence; in a later example, the word ``married'' receives three different
+tags. We use part-of-speech tagging to get lots of conditions on sentences, such as:
+\begin{itemize}
+    \item Sentences which end in a past tense verb (\pythoninline{nltk.pos_tag == 'VBD'});
+    \item Sentences which include a numerical reference (\pythoninline{nltk.pos_tag == 'CD'})
+\end{itemize}
+Part-of-speech determination is not an exact science, and the method \pythoninline{nltk.pos_tag} is similarly imperfect. Nevertheless,
+we can easily generate lots of conditions with reasonably high accuracy (that is, accuracy to matching what a human would categorize) so we
+forage on undeterred. 
+
+
+
+
+
+
+\subsection{A further failed attempt; MASC}
+I've tried using a different data set with what I consider to be ``simpler'' sentences than Jane Austen. The MASC corpus is simpler
+language than Austen's works, however I still struggle to get accuracy better than simply guessing. 
+
+\section{Articulation}
+I have essentially failed at the first part of this research assignment, so that part 2 (in which we test how well a LLM can
+articulate what it has learned in context) is difficult to accomplish. Nevertheless, I can try asking the LLM what it has learned
+the rule to be on the few languages on which we have significantly better results than blindly guessing. Requesting an explanation of
+what the LLM learns as the secret rule results in substantively different answers each time. For example, given the prompt:
+
+\begin{quote}
+    Each of the following sentences is labeled 'Yes' if it follows a secret rule and labeled 'No' otherwise: \\ \\
+
+"Enhver som er anklaget for en straffbar handling h": Yes; \\
+"Heller ikke skal det kunne idømmes strengere straf": Yes; \\
+"VERDENSERKLÆRINGEN OM MENNESKERETTIGHETENE INNLEDN": Yes; \\
+"Tikina e 7.": No; \\
+"Inqaku lesi - 5 Akukho namnye oyakuphathwa gadalal": No; \\
+"Akakchíl tsalap (art . 6).": No; 
+\\ \\
+Your job is to learn the secret rule, thinking carefully about the previous examples. Explain the rule.
+\end{quote}
+
+the response is
+\begin{quote}
+The secret rule is that all sentences must contain a complete word or phrase followed by a single character that is a punctuation mark, either a period or a question mark. Additionally, the entire sentence must be written in all uppercase letters.
+\end{quote}
+
+Obviously, this explanation makes no sense; under no circumstances could the system have learned the rule well enough to get 80\% accuracy
+while believing the rule is as stated above. I have no explanation for this. 
+
+
+
+\section{Conclusion} \label{sec:conclusion}
+Some kind of conclusion.
+
+
+
+
+
+
+\end{document}
+
